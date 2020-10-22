@@ -47,10 +47,8 @@ const withDataFetching = (props: Props) => (
         }
 
         async getList(api?: string) {
-            console.log(api)
             const data = await fetch(api + '&offset=' + this.state.page);
             const json = await data.json();
-            console.log(json)
 
             if (json) {
                 this.setState({
@@ -67,6 +65,9 @@ const withDataFetching = (props: Props) => (
                 let doc = document.scrollingElement
                 if (doc)
                     if (!this.state.preloader && doc.scrollHeight - doc.clientHeight - doc.scrollTop <= 2000) {
+                        // scrollHeight - height of content with padding
+                        // clientHeight - height of context that is visible to client
+                        // scrollTop - number of pixels scrolled
                         this.setState({
                             page: this.state.page + 20,
                             preloader: true
