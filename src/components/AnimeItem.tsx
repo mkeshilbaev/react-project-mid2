@@ -24,7 +24,7 @@ export default function AnimeItem({ id, slug, title, image }: Props): ReactEleme
                     <img src={image} alt="title" style={{ width: '100%', height: '100%' }} />
                 </Link>
             </div>
-            <div className='anime-item-title' style={{ ...animeItemStyles, height: '50px', alignItems: 'center', backgroundColor: '#ffcccb' }}>
+            <div className='anime-item-title' style={{ ...animeItemStyles, height: '50px', alignItems: 'center', backgroundColor: 'white' }}>
                 {title}
             </div>
 
