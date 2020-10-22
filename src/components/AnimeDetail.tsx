@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react'
+import React, { ReactElement, useContext } from 'react'
 import { useRouteMatch } from 'react-router-dom'
 import Loading from './Loading';
 import useDataFetching from './useDataFetching';
@@ -28,7 +28,7 @@ function AnimeDetail({ }: Props): ReactElement {
                     <div className='poster-background'>
                     </div>
                     <div>
-                        <img src={ANIME_FIRST_EPISODE_URL(match.params.id, match.params.slug)} alt={`${match.params.id}_${match.params.slug}`} />
+                        <img src={ANIME_FIRST_EPISODE_URL(match.params.id, match.params.slug, 'dub')} alt={`${match.params.id}_${match.params.slug}`} />
                     </div>
                 </div>
                 <h1>{results[0].anime_name}</h1>

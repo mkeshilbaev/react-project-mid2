@@ -1,12 +1,11 @@
 import React, { ReactElement, useRef, useEffect, useState } from 'react'
 import { Redirect } from 'react-router-dom'
 import axios from 'axios'
+import { BACKEND_API_URL as API_URL } from '../shared/constants'
 
 interface Props {
-    setToken: any
+    setToken: (token: string) => void
 }
-
-const API_URL = 'http://localhost:3030/'
 
 export default function Registration(props: Props): ReactElement {
     const [validationErrors, setValidationErrors] = useState({
@@ -19,39 +18,38 @@ export default function Registration(props: Props): ReactElement {
     const emailRef = useRef<HTMLInputElement>(null)
     const passwordRef = useRef<HTMLInputElement>(null)
     const passwordConfirmRef = useRef<HTMLInputElement>(null)
-    
 
     useEffect(() => {
         emailRef.current?.focus();
     }, [])
 
     function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
-        event.preventDefault();
+        event.preventDefault()
         const isRight = validate()
 
         if (isRight) {
-            axios.post(API_URL + `users`, {
+            axios.post(API_URL + 'users', {
                 username: emailRef.current?.value,
                 email: emailRef.current?.value,
                 password: passwordRef.current?.value
             })
-            .then(res => {
-                const data = res.data
-                if(data.id){
-                    axios.post(API_URL + `sign-in`, {
-                        username: emailRef.current?.value,
-                        password: passwordRef.current?.value
-                    })
-                    .then(res1 => {
-                        if(res1.data.accessToken){
-                            localStorage.setItem('token', res1.data.accessToken)
-                            props.setToken(res1.data.accessToken); 
-                            setRedirect(true)
-                        }
-                    })
-                }
+                .then(res => {
+                    const data = res.data
+                    if (data.id) {
+                        axios.post(API_URL + 'sign-in', {
+                            username: emailRef.current?.value,
+                            password: passwordRef.current?.value
+                        })
+                            .then(res1 => {
+                                if (res1.data.accessToken) {
+                                    localStorage.setItem('token', res1.data.accessToken)
+                                    props.setToken(res1.data.accessToken);
+                                    setRedirect(true)
+                                }
+                            })
+                    }
 
-            })
+                })
         }
     }
 

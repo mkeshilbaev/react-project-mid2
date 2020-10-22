@@ -8,7 +8,7 @@ interface Props {
     token?: string;
 }
 export default function Navbar(props: Props): ReactElement {
-    const [profile, setProfilles] = useState({
+    const [profile, setProfiles] = useState({
         email: '',
         username: ''
     })
@@ -20,11 +20,11 @@ export default function Navbar(props: Props): ReactElement {
             }
         })
             .then(res => {
-                setProfilles(res.data)
+                setProfiles(res.data)
             })
 
     const signOut = () => {
-        setProfilles({ email: '', username: '' })
+        setProfiles({ email: '', username: '' })
         localStorage.setItem('token', '')
     }
 

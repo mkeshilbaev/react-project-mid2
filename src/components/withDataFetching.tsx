@@ -24,7 +24,7 @@ const withDataFetching = (props: Props) => (
                 loading: true,
                 preloader: true,
                 error: "",
-                page: 0,
+                page: 20,
                 api: ''
             };
         }

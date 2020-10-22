@@ -7,12 +7,27 @@ import AnimeTab from './components/AnimeTab';
 import AnimeDetail from './components/AnimeDetail';
 import ErrorBoundary from './components/ErrorBoundary';
 import withDataFetching from './components/withDataFetching';
-import { API_URL, SR_IMAGE_URL } from './shared/constants'
+import { API_URL, SR_IMAGE_URL, DORAMAS } from './shared/constants'
+import Auth from './components/Auth';
+
 interface Props {
     results?: any[];
     loading?: boolean;
     error?: any;
 }
+
+const inputPlaceholders = {
+    anime: {
+        type: 'anime',
+        placeholder: 'Boku no Hero Academia'
+    },
+    dorama: {
+        type: 'dorama',
+        placeholder: 'Lovely Horribly'
+    }
+}
+
+export const TypeContext = React.createContext<{ type: string, placeholder: string }>(inputPlaceholders.dorama)
 
 
 function App({ loading, results, error }: Props) {
@@ -24,8 +39,8 @@ function App({ loading, results, error }: Props) {
         });
     }
 
-    const changeToken = (e: string) => {
-        setToken(e)
+    const changeToken = (token: string) => {
+        setToken(token)
     }
 
     return (
@@ -35,7 +50,9 @@ function App({ loading, results, error }: Props) {
                 <Switch>
                     <Route exact path='/anime'>
                         <ErrorBoundary>
-                            <AnimeTab listOfAnimes={results ? results : []} />
+                            <TypeContext.Provider value={inputPlaceholders.anime}>
+                                <AnimeTab listOfAnimes={results ? results : []} />
+                            </TypeContext.Provider>
                         </ErrorBoundary>
                     </Route>
                     <Route path='/anime/:id/:slug'>
@@ -43,12 +60,19 @@ function App({ loading, results, error }: Props) {
                             <AnimeDetail />
                         </ErrorBoundary>
                     </Route>
-                    <Route path='/dorama'>
-                        <h1>DORAMA</h1>
+                    <Route exact path='/dorama'>
+                        <TypeContext.Provider value={inputPlaceholders.dorama}>
+                            <AnimeTab listOfAnimes={DORAMAS} />
+                        </TypeContext.Provider>
                     </Route>
-                    <Route path='/login'>
-                        <h1>LOGIN</h1>
+                    <Route path='/dorama/:id/:slug'>
+                        <ErrorBoundary>
+                            <AnimeDetail />
+                        </ErrorBoundary>
                     </Route>
+                    <Route path='/login' render={(props) => (
+                        <Auth {...props} setToken={changeToken} />
+                    )} />
                     <Route path='/signup' render={(props) => (
                         <Registration {...props} setToken={changeToken} />
                     )} />
@@ -57,7 +81,7 @@ function App({ loading, results, error }: Props) {
                     </Route>
                 </Switch>
             </div>
-        </div>
+        </div >
     );
 }
 
