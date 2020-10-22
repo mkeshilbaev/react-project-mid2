@@ -1,0 +1,40 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+html, body {
+    height: 100%;
+}
+
+.wrapper {
+    background: #f7f7f7;
+    padding: 21em 0 0 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.loader {
+    width: 8rem;
+}
+
+.loading-animation__path {
+    stroke: #f93522;
+    stroke-width: 5;
+    fill: none;
+    stroke-dasharray: 500;
+    stroke-dashoffset: 500;
+    animation: stroke 2s linear infinite;
+}
+
+@keyframes stroke {
+    from {
+        stroke-dashoffset: 500;
+    }
+    to {
+        stroke-dashoffset: 0;
+    }
+}

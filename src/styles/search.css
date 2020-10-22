@@ -1,0 +1,29 @@
+.search {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 10px;
+    width: 100%;
+}
+
+input[type="submit"] {
+    padding: 5px;
+    background-color: #f93522;
+    color: white;
+    width: 80px;
+    margin-left: 10px;
+    cursor: pointer;
+    border: 0px;
+}
+
+.search>input[type="text"] {
+    width: 87%;
+    min-width: 170px;
+    padding: 10px;
+    border: 0px;
+}
+
+.search>input[type="text"]:focus, input[type="submit"]:focus {
+    outline: none;
+}
